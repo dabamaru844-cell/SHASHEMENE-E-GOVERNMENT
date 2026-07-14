@@ -171,4 +171,11 @@ return [
     'attendance_alert' => 'Akeekkachiisa Argamaa',
     'language' => 'Afaan',
     'copyright' => '© :year SHASHE E GOVERNMENT. Mirgi hundi eegame.',
+    'delete_employee' => 'Hojjetaa Haqi',
+    'delete_asset' => 'Qabeenya Haqi',
+    'employee_not_found' => 'Hojjetaan hin argamne.',
+    'asset_not_found' => 'Qabeenya hin argamne.',
+    'invalid_request' => 'Gaafii sirrii miti.',
+    'delete_failed' => 'Haquun hin milkoofne.',
+    'cannot_delete_assigned_asset' => 'Qabeenya kenname haquu hin dandeenyu.',
 ];

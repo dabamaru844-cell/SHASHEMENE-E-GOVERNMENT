@@ -171,4 +171,11 @@ return [
     'attendance_alert' => 'የሰዓት መግቢያ ማስጠንቀቂያ',
     'language' => 'ቋንቋ',
     'copyright' => '© :year SHASHE E GOVERNMENT. ሁሉም መብቶች የተጠበቁ ናቸው።',
+    'delete_employee' => 'ሰራተኛ ሰርዝ',
+    'delete_asset' => 'ንብረት ሰርዝ',
+    'employee_not_found' => 'ሰራተኛ አልተገኘም።',
+    'asset_not_found' => 'ንብረት አልተገኘም።',
+    'invalid_request' => 'ልክ ያልሆነ ጥያቄ።',
+    'delete_failed' => 'መሰረዝ አልተሳካም።',
+    'cannot_delete_assigned_asset' => 'የተመደበ ንብረት መሰረዝ አይቻልም።',
 ];

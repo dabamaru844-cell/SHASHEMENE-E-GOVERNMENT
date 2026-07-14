@@ -9,6 +9,8 @@ $menuItems = [
     ['module' => 'assets', 'icon' => 'pc-display', 'label' => __('assets'), 'url' => 'modules/assets/index.php'],
     ['module' => 'attendance', 'icon' => 'calendar-check', 'label' => __('attendance'), 'url' => 'modules/attendance/index.php'],
     ['module' => 'leave', 'icon' => 'calendar-x', 'label' => __('leave'), 'url' => 'modules/leave/index.php'],
+    ['module' => 'retirement', 'icon' => 'calendar-event', 'label' => __('retirement_management'), 'url' => 'modules/retirement/index.php', 'roles' => ['admin', 'hr']],
+    ['module' => 'clearance', 'icon' => 'clipboard-check', 'label' => __('clearance_management'), 'url' => 'modules/clearance/index.php', 'roles' => ['admin', 'hr']],
     ['module' => 'reports', 'icon' => 'file-earmark-bar-graph', 'label' => __('reports'), 'url' => 'modules/reports/index.php'],
     ['module' => 'notifications', 'icon' => 'bell', 'label' => __('notifications'), 'url' => 'modules/notifications/index.php'],
     ['module' => 'settings', 'icon' => 'gear', 'label' => __('settings'), 'url' => 'modules/settings/index.php', 'roles' => ['admin']],

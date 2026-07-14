@@ -82,6 +82,7 @@ require __DIR__ . '/../../includes/header.php';
                     <a href="<?= baseUrl('modules/assets/view.php?id=' . $a['id']) ?>" class="btn btn-sm btn-outline-info"><i class="bi bi-eye"></i></a>
                     <?php if (hasRole('admin', 'it')): ?>
                     <a href="<?= baseUrl('modules/assets/edit.php?id=' . $a['id']) ?>" class="btn btn-sm btn-outline-primary"><i class="bi bi-pencil"></i></a>
+                    <a href="<?= baseUrl('modules/assets/delete.php?id=' . $a['id']) ?>" class="btn btn-sm btn-outline-danger"><i class="bi bi-trash"></i></a>
                     <?php endif; ?>
                 </td>
             </tr>

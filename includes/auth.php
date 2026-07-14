@@ -45,9 +45,9 @@ function canAccess(string $module): bool
         return false;
     }
     $permissions = [
-        'admin' => ['dashboard', 'users', 'employees', 'assets', 'attendance', 'leave', 'reports', 'notifications', 'settings', 'profile'],
-        'hr' => ['dashboard', 'employees', 'attendance', 'leave', 'reports', 'notifications', 'profile'],
-        'it' => ['dashboard', 'assets', 'reports', 'notifications', 'profile'],
+        'admin' => ['dashboard', 'users', 'employees', 'assets', 'attendance', 'leave', 'retirement', 'clearance', 'reports', 'notifications', 'settings', 'profile'],
+        'hr' => ['dashboard', 'employees', 'attendance', 'leave', 'retirement', 'clearance', 'reports', 'notifications', 'profile'],
+        'it' => ['dashboard', 'assets', 'clearance', 'reports', 'notifications', 'profile'],
         'employee' => ['dashboard', 'profile', 'attendance', 'leave', 'notifications'],
     ];
     $role = $user['role_slug'];

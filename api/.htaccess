@@ -1,0 +1,77 @@
+# REST API Layer .htaccess Configuration
+# Routes all requests to index.php and applies security headers
+
+# Enable rewrite engine
+RewriteEngine On
+
+# Set base directory for rewrite rules
+RewriteBase /api/
+
+# Route all requests to index.php (except for existing files)
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ index.php [QSA,L]
+
+# Security Headers
+<IfModule mod_headers.c>
+    # Prevent MIME type sniffing
+    Header set X-Content-Type-Options "nosniff"
+    
+    # Prevent clickjacking attacks
+    Header set X-Frame-Options "DENY"
+    
+    # Enable XSS protection in older browsers
+    Header set X-XSS-Protection "1; mode=block"
+    
+    # Remove server information
+    Header unset Server
+    Header unset X-Powered-By
+</IfModule>
+
+# Disable directory listing
+Options -Indexes
+
+# PHP Error Handling Configuration
+<IfModule mod_php.c>
+    # Disable error display in production
+    php_flag display_errors Off
+    php_flag display_startup_errors Off
+    
+    # Enable error logging
+    php_flag log_errors On
+    
+    # Set error reporting level (log all errors but don't display)
+    php_value error_reporting 32767
+    
+    # Set error log file location (relative to api directory)
+    php_value error_log ../logs/api_errors.log
+    
+    # Disable expose_php (removes PHP version from headers)
+    php_flag expose_php Off
+</IfModule>
+
+# Deny access to sensitive files
+<FilesMatch "^\.">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
+
+# Deny access to .htaccess file itself
+<Files .htaccess>
+    Order allow,deny
+    Deny from all
+</Files>
+
+# Set default character encoding
+AddDefaultCharset UTF-8
+
+# Force UTF-8 for specific file types
+AddCharset UTF-8 .php .json
+
+# Disable ETags for security
+FileETag None
+
+# Set appropriate MIME types for JSON
+<IfModule mod_mime.c>
+    AddType application/json .json
+</IfModule>

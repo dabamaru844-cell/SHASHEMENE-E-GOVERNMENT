@@ -33,6 +33,12 @@ DROP TABLE IF EXISTS roles;
 
 DROP TABLE IF EXISTS system_settings;
 
+DROP TABLE IF EXISTS clearance_approvals;
+
+DROP TABLE IF EXISTS clearances;
+
+DROP TABLE IF EXISTS retirements;
+
 SET FOREIGN_KEY_CHECKS = 1;
 
 CREATE TABLE roles (
@@ -250,6 +256,77 @@ CREATE TABLE system_settings (
     setting_key VARCHAR(100) NOT NULL UNIQUE,
     setting_value TEXT,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE = InnoDB;
+
+CREATE TABLE retirements (
+    id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+    employee_id INT UNSIGNED NOT NULL,
+    retirement_date DATE NOT NULL,
+    status ENUM(
+        'active',
+        'near_retirement',
+        'retirement_eligible',
+        'retired'
+    ) DEFAULT 'active',
+    remarks TEXT,
+    notified TINYINT(1) DEFAULT 0,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (employee_id) REFERENCES employees (id) ON DELETE CASCADE,
+    UNIQUE KEY uk_employee (employee_id),
+    INDEX idx_status (status),
+    INDEX idx_retirement_date (retirement_date)
+) ENGINE = InnoDB;
+
+CREATE TABLE clearances (
+    id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+    employee_id INT UNSIGNED NOT NULL,
+    exit_reason ENUM(
+        'resignation',
+        'retirement',
+        'termination',
+        'contract_end',
+        'other'
+    ) NOT NULL,
+    exit_date DATE NOT NULL,
+    hr_status ENUM('pending', 'approved', 'rejected') DEFAULT 'pending',
+    it_status ENUM('pending', 'approved', 'rejected') DEFAULT 'pending',
+    finance_status ENUM('pending', 'approved', 'rejected') DEFAULT 'pending',
+    store_status ENUM('pending', 'approved', 'rejected') DEFAULT 'pending',
+    administration_status ENUM('pending', 'approved', 'rejected') DEFAULT 'pending',
+    overall_status ENUM(
+        'pending',
+        'in_progress',
+        'completed',
+        'cancelled'
+    ) DEFAULT 'pending',
+    approved_by INT UNSIGNED DEFAULT NULL,
+    certificate_generated TINYINT(1) DEFAULT 0,
+    remarks TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (employee_id) REFERENCES employees (id),
+    FOREIGN KEY (approved_by) REFERENCES users (id) ON DELETE SET NULL,
+    INDEX idx_employee (employee_id),
+    INDEX idx_overall_status (overall_status),
+    INDEX idx_exit_date (exit_date)
+) ENGINE = InnoDB;
+
+CREATE TABLE clearance_approvals (
+    id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+    clearance_id INT UNSIGNED NOT NULL,
+    department VARCHAR(50) NOT NULL,
+    status ENUM('pending', 'approved', 'rejected') DEFAULT 'pending',
+    approved_by INT UNSIGNED DEFAULT NULL,
+    comments TEXT,
+    assets_returned TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (clearance_id) REFERENCES clearances (id) ON DELETE CASCADE,
+    FOREIGN KEY (approved_by) REFERENCES users (id) ON DELETE SET NULL,
+    INDEX idx_clearance (clearance_id),
+    INDEX idx_department (department),
+    INDEX idx_status (status)
 ) ENGINE = InnoDB;
 
 -- Seed roles
